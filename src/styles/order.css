@@ -1,0 +1,31 @@
+.title-order {
+    font-size: 30px;
+    font-weight: 300;
+    color: black;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+
+    box-shadow: rgba(219, 20, 20, 0.1) 0px 4px 40px -6px;
+    padding: 25px;
+    border-radius: 20px;
+}
+
+.order-item img{
+    width: 90px;
+    height: 90px;
+}
+
+.order-item-main h3{
+    font-size: 20px;
+    color: black;
+}
+
+.order-item-main p{
+    font-size: 20px;
+    color: black;
+}
