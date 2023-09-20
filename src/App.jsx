@@ -1,14 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import PizzaSection from "./section/PizzaSection";
 import OftenOrder from "./section/OftenOrder";
+import PizzaPage from "./page/PizzaPage";
+import Calculator from "./page/Calculator";
+import TodoList from "./page/TodoList";
 
 const App = () => {
 
+
     return (
         <main>
-            <PizzaSection/>
-            <div style={{marginTop: 100}}/>
-            <OftenOrder/>
+           {/*<PizzaPage/>*/}
+           {/*<Calculator/>*/}
+           <TodoList/>
         </main>
     );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import pizzaOne from "../accets/img/1.webp";
 import pizzaTwo from "../accets/img/2.webp";
 import pizzaThree from "../accets/img/3.webp";
