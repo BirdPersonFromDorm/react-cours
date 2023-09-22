@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import ModalHeader from "../components/ModalHeader";
 import {Button, Form, Input, Select, Switch} from "antd";
 import CustomCheckbox from "../components/CustomCheckbox";
+import {useTodo} from "../context";
 
 export default function EditTodos({
                                       onClose,
@@ -9,28 +10,28 @@ export default function EditTodos({
                                       styles,
                                       darkMode,
                                       setDarkMode
-}) {
+                                  }) {
 
-    // const [form] = Form.useForm();
-    // const {todos, dispatch} = useTodo();
-    //
+    const [form] = Form.useForm();
+    const {todos, dispatch} = useTodo();
+
     const [isChecked, setIsChecked] = useState(false);
-    //
-    // const handleEdit = (values) => {
-    //     const data = {
-    //         id,
-    //         ...values,
-    //         employed: isChecked,
-    //     }
-    //     dispatch({type: 'EDIT_TODO', payload: data});
-    //     onClose()
-    // };
-    //
-    // useEffect(() =>{
-    //     const todoToEdit = todos.find((todo) => todo.id === id);
-    //     form.setFieldsValue(todoToEdit);
-    //     setIsChecked(todoToEdit?.employed);
-    // }, [id])
+
+    const handleEdit = (values) => {
+        const data = {
+            id,
+            ...values,
+            employed: isChecked,
+        }
+        dispatch({type: 'EDIT_TODO', payload: data});
+        onClose()
+    };
+
+    useEffect(() =>{
+        const todoToEdit = todos.find((todo) => todo.id === id);
+        form.setFieldsValue(todoToEdit);
+        setIsChecked(todoToEdit?.employed);
+    }, [id])
 
     return (
         <div style={{
@@ -39,7 +40,7 @@ export default function EditTodos({
             backgroundColor: darkMode === 'dark' ? '#323234' : '#ffffff'
         }}>
             <ModalHeader title={"Редактирование todos"} onClose={onClose}/>
-            <Form layout="vertical">
+            <Form form={form} onFinish={handleEdit} layout="vertical">
                 <Form.Item
                     name="name"
                     rules={[{required: true}]}

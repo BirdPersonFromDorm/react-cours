@@ -1,23 +1,22 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import {Context} from "../CounterContext";
 
 const Calculator = () => {
 
-    const [count, setCount] = useState(1)
+    const {state, dispatch} = useContext(Context)
 
     const handlePlus = () =>{
-        setCount((prev) => prev + 10)
-        setCount((prev) => prev - 5)
+        dispatch({type: 'PLUS_ONE'})
     }
 
     const handleMinus = () =>{
-        setCount(count - 1)
+        dispatch({type: 'MINUS_ONE'})
     }
-
 
     return (
         <div className="calcur-wrap">
             <div style={{fontSize: 25}}>
-                {count}
+                {state.count}
             </div>
             <div className="calcur-wrap-buttons">
                 <div

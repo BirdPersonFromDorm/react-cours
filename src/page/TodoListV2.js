@@ -1,8 +1,10 @@
+// src/components/TodoList.js
 import React, {useState} from 'react';
-import {Select, Input, Form, Modal, Dropdown, Button, Switch, Table} from "antd";
-import EditTodos from "../modal/EditTodos";
-import MoreOutlined from "@ant-design/icons/lib/icons/MoreOutlined";
+import {Form, Input, Checkbox, Button, Table, Switch, Select, Dropdown, Modal} from 'antd';
+import {TodoProvider, useTodo} from '../context';
 import CustomCheckbox from "../components/CustomCheckbox";
+import Icon, {MoreOutlined} from "@ant-design/icons";
+import EditTodos from "../modal/EditTodos";
 
 const styles = {
     dark: {
@@ -96,29 +98,14 @@ const menuItems = [
 ];
 
 
-const data = [
-    {
-        id: 1,
-        employed: 'name1',
-        name: 'test',
-        age: 12,
-        subscribed: 'subscribed',
-    },
-    {
-        id: 2,
-        employed: 'name1',
-        name: 'test',
-        age: 12,
-        subscribed: 'subscribed',
-    },
-]
+const TodoList = () => {
 
-const TodoListV2 = () => {
-
+    const {todos, dispatch} = useTodo();
     const [form] = Form.useForm();
 
     const [darkMode, setDarkMode] = useState('light');
     const [isChecked, setIsChecked] = useState(false);
+
     const [editModal, setEditModal] = useState({
         isOpen: false,
         id: null
@@ -148,7 +135,7 @@ const TodoListV2 = () => {
             dataIndex: 'employed',
             key: 'employed',
             width: "25%",
-            render: (subscribed, record) => (subscribed ? 'Yes' : 'No'),
+            render: (subscribed) => (subscribed ? 'Yes' : 'No'),
         },
         {
             title: '',
@@ -156,11 +143,15 @@ const TodoListV2 = () => {
             key: 'id',
             width: "5%",
             render: (text, record) => (
-                <div>
+                <div
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
+                >
                     <Dropdown
                         trigger={["click"]}
                         placement={"bottomRight"}
-                        menu={getActions(record.id)}
+                        menu={getActions(record)}
                         overlayClassName={"dropdown-border"}
                     >
                         <MoreOutlined style={{cursor: "pointer", fontSize: "20px"}}/>
@@ -170,7 +161,7 @@ const TodoListV2 = () => {
         },
     ];
 
-    const getActions = (id) => {
+    const getActions = (record) => {
         const actions = {
             items: menuItems,
             onClick: ({item, key, keyPath, domEvent}) => {
@@ -178,11 +169,11 @@ const TodoListV2 = () => {
                     case "EDIT":
                         setEditModal({
                             isOpen: true,
-                            id: id
+                            id: record?.id
                         })
                         break;
                     case "DELETE":
-                        // handleDelete(record?.id)
+                        handleDelete(record?.id)
                         break;
                 }
             },
@@ -191,21 +182,34 @@ const TodoListV2 = () => {
         return actions;
     };
 
+    const handleAdd = (values) => {
+        const newTodo = {
+            ...values,
+            employed: isChecked,
+            id: Date.now(),
+        };
+        dispatch({type: 'ADD_TODO', payload: newTodo});
+        form.resetFields();
+        setIsChecked(false)
+    };
+
+    const handleDelete = (id) => {
+        dispatch({type: 'DELETE_TODO', payload: id});
+    };
+
+
     return (
         <div className="wrapper" style={styles[darkMode].wrapper}>
             <div className='todo-wrapper'>
                 <div className="todo-form" style={styles[darkMode].todoForm}>
-                    <Form
-                        layout="vertical"
-                        form={form}
-                    >
+                    <Form form={form} onFinish={handleAdd} layout="vertical">
                         <div className="form-title" style={styles[darkMode].formTitle}>
                             Insert Row
                         </div>
 
                         <Form.Item
                             name="name"
-                            rules={[{required: true,}]}
+                            rules={[{required: true}]}
                         >
                             <Input
                                 style={styles[darkMode].input}
@@ -270,7 +274,9 @@ const TodoListV2 = () => {
 
                         <div className="todo-mode">
                             <Switch
-                                style={{backgroundColor: '#11de33',}}
+                                style={{
+                                    backgroundColor: '#11de33',
+                                }}
                                 checked={darkMode === 'dark'}
                                 onChange={(e) => setDarkMode(e ? 'dark' : 'light')}
                             />
@@ -282,9 +288,9 @@ const TodoListV2 = () => {
                 <div className="todo-table">
                     <Table
                         className={darkMode}
-                        dataSource={data}
-                        // dataSource={todos}
+                        dataSource={todos}
                         columns={columns}
+                        rowKey="id"
                         pagination={false}
                         scroll={{x: 'max-content', y: 335}}
                     />
@@ -302,7 +308,7 @@ const TodoListV2 = () => {
                     darkMode={darkMode}
                     setDarkMode={setDarkMode}
                     styles={styles}
-                    // handleAdd={handleAdd}
+                    handleAdd={handleAdd}
                     id={editModal.id}
                     onClose={() => {
                         setEditModal({
@@ -316,4 +322,4 @@ const TodoListV2 = () => {
     );
 };
 
-export default TodoListV2;
+export default TodoList;
