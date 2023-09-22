@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 const Calculator = () => {
 
@@ -12,6 +12,7 @@ const Calculator = () => {
     const handleMinus = () =>{
         setCount(count - 1)
     }
+
 
     return (
         <div className="calcur-wrap">

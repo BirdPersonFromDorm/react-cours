@@ -1,6 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 const TodoList = () => {
+
+    const ref = useRef()
+    const inputTitleRef = useRef()
 
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
@@ -21,7 +24,7 @@ const TodoList = () => {
         },
     ])
 
-    const handleAddTodo = () =>{
+    const handleAddTodo = () => {
         const newToDo = {
             id: Date.now(),
             title,
@@ -29,43 +32,55 @@ const TodoList = () => {
             isChecked
         }
 
-        setList((list) => [...list, newToDo])
-        setList((list) => [...list, newToDo])
-        setTitle('')
-        setDesc('')
-        setIsChecked(false)
+        if (title && desc) {
+            setList((list) => [...list, newToDo])
+            // setList((list) => [...list, newToDo])
+            setTitle('')
+            setDesc('')
+            setIsChecked(false)
+        }
+
     }
 
-    const handleDelete = (id) =>{
+    const handleDelete = (id) => {
         let filter = list.filter(item => item.id !== id);
         setList(filter)
     }
+
+    useEffect(() => {
+        ref.current.scrollIntoView({behavior: 'smooth'})
+    }, [list.length])
+
+    useEffect(() => {
+      inputTitleRef.current.focus()
+    }, [])
 
     return (
         <div className="todo-wrap">
             <div className="to-do-list">
                 {
                     list.map((item) =>
-                    <div className="to-do-list-item">
-                        <h3>{item?.title}</h3>
+                        <div className="to-do-list-item">
+                            <h3>{item?.title}</h3>
 
-                        <div className="to-do-list-item-bottom">
-                            <input type="checkbox" checked={item.isChecked}/>
-                            <p>{item?.desc}</p>
-                        </div>
+                            <div className="to-do-list-item-bottom">
+                                <input type="checkbox" checked={item.isChecked}/>
+                                <p>{item?.desc}</p>
+                            </div>
 
-                        <div
-                            onClick={() => handleDelete(item.id)}
-                            className="to-do-list-item-delete"
-                        >
-                            x
+                            <div
+                                onClick={() => handleDelete(item.id)}
+                                className="to-do-list-item-delete"
+                            >
+                                x
+                            </div>
                         </div>
-                    </div>
                     )
                 }
             </div>
-            <div className="input-block">
+            <div className="input-block" ref={ref}>
                 <input
+                    ref={inputTitleRef}
                     placeholder={'Title'}
                     type="text"
                     value={title}
@@ -82,7 +97,10 @@ const TodoList = () => {
                     value={isChecked}
                     onChange={(e) => setIsChecked(e?.target?.checked)}
                 />
-                <button onClick={handleAddTodo}>
+                <button
+                    onClick={handleAddTodo}
+                    disabled={!(desc && title)}
+                >
                     Добавить
                 </button>
             </div>
