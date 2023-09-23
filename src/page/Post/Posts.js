@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {fetchData} from "../redux/slice/posts";
-import {get} from '../api/request'
+import {fetchData} from "../../redux/slice/posts";
+import {get} from '../../api/request'
+import {Link} from "react-router-dom";
 
 const Posts = () => {
 
@@ -28,15 +29,17 @@ const Posts = () => {
             </div>
             {
                 posts?.map(item =>
-                <div className="post-item">
-                    <h1>
-                        {item.title}
-                    </h1>
-                    <div className="post-line"/>
-                    <p>
-                        {item.body}
-                    </p>
-                </div>
+                    <Link to={`/posts/${item?.id}?isShowTitle=${item.title.length < 20 ? 'noSlice': 'slice'}`}>
+                        <div className="post-item">
+                            <h1>
+                                {item.title}
+                            </h1>
+                            <div className="post-line"/>
+                            <p>
+                                {item.body}
+                            </p>
+                        </div>
+                    </Link>
                 )
             }
         </div>

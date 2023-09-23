@@ -1,42 +1,37 @@
 import React, {createContext, useEffect, useRef, useState} from "react";
-import PizzaSection from "./section/PizzaSection";
-import OftenOrder from "./section/OftenOrder";
 import PizzaPage from "./page/PizzaPage";
 import Calculator from "./page/Calculator";
 import TodoList from "./page/TodoList";
 import TodoListV2 from "./page/TodoListV2";
-import CounterContext from "./CounterContext";
-import {TodoProvider} from "./context";
-import {Provider, useDispatch, useSelector} from "react-redux";
-import store, {persistor} from "./redux/store";
-import {PersistGate} from 'redux-persist/integration/react'
-import {fetchData} from "./redux/slice/todos";
-import Posts from "./page/Posts";
+import Posts from "./page/Post/Posts";
 import MainLayout from "./layout/MainLayout";
+import {Routes, Route, Navigate, useRoutes} from 'react-router-dom'
+import PostById from "./page/Post/PostById";
+import {routes} from "./routes";
 
 const App = () => {
 
-    const {route} = useSelector((state) => state.routes)
+    const content = useRoutes(routes)
 
     return (
-        <MainLayout>
-            {route === 1 &&
-            <Posts/>
-            }
-            {route === 2 &&
-            <TodoList/>
-            }
-            {route === 3 &&
-            <TodoListV2/>
-            }
-            {route === 4 &&
-            <PizzaPage/>
-            }
-            {route === 5 &&
-            <Calculator/>
-            }
-        </MainLayout>
-
+        <>
+            {content}
+        </>
+        // <Routes>
+        //     <Route path={'/'} element={<MainLayout/>}>
+        //
+        //         <Route path={'/posts'} element={<Posts/>}/>
+        //         <Route path={'/posts/:id'} element={<PostById/>}/>
+        //
+        //         <Route path={'/todos'} element={<TodoList/>}/>
+        //         <Route path={'/todos-v2'} element={<TodoListV2/>}/>
+        //         <Route path={'/pizza'} element={<PizzaPage/>}/>
+        //         <Route path={'/counter'} element={<Calculator/>}/>
+        //
+        //         <Route path={'/'} element={<Navigate to={'/posts'}/>}/>
+        //         <Route path={'*'} element={<Navigate to={'/posts'}/>}/>
+        //     </Route>
+        // </Routes>
     );
 }
 

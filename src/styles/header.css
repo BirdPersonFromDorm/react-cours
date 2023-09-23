@@ -14,11 +14,15 @@
     gap: 20px;
 }
 
-.header h3{
+.header a{
     padding: 10px;
     border-radius: 15px;
     background-color: #e18b4e;
     color: #fff;
 
     cursor: pointer;
+}
+
+.active-link{
+    background-color: #11de33 !important;
 }
