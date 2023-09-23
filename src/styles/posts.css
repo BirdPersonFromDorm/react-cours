@@ -1,0 +1,26 @@
+.post-wrap{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.post-item{
+    padding: 10px;
+    width: 200px;
+    min-height: 100px;
+    border: 1px solid #000000;
+    border-radius: 10px;
+}
+.post-item h1{
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.post-line{
+    width: 80%;
+    height: 1px;
+    background-color: #e18b4e;
+    margin: 0 auto;
+}

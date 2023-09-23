@@ -3,6 +3,8 @@ import ModalHeader from "../components/ModalHeader";
 import {Button, Form, Input, Select, Switch} from "antd";
 import CustomCheckbox from "../components/CustomCheckbox";
 import {useTodo} from "../context";
+import {useDispatch, useSelector} from "react-redux";
+import {editTodos} from "../redux/slice/todos";
 
 export default function EditTodos({
                                       onClose,
@@ -13,7 +15,8 @@ export default function EditTodos({
                                   }) {
 
     const [form] = Form.useForm();
-    const {todos, dispatch} = useTodo();
+    const {todos} = useSelector((state) => state.todos)
+    const dispatch = useDispatch()
 
     const [isChecked, setIsChecked] = useState(false);
 
@@ -23,7 +26,7 @@ export default function EditTodos({
             ...values,
             employed: isChecked,
         }
-        dispatch({type: 'EDIT_TODO', payload: data});
+        dispatch(editTodos(data));
         onClose()
     };
 

@@ -5,6 +5,8 @@ import {TodoProvider, useTodo} from '../context';
 import CustomCheckbox from "../components/CustomCheckbox";
 import Icon, {MoreOutlined} from "@ant-design/icons";
 import EditTodos from "../modal/EditTodos";
+import {useDispatch, useSelector} from "react-redux";
+import {addTodos, deleteTodos} from "../redux/slice/todos";
 
 const styles = {
     dark: {
@@ -100,7 +102,9 @@ const menuItems = [
 
 const TodoList = () => {
 
-    const {todos, dispatch} = useTodo();
+    const {todos} = useSelector((state) => state.todos)
+    const dispatch = useDispatch()
+
     const [form] = Form.useForm();
 
     const [darkMode, setDarkMode] = useState('light');
@@ -188,13 +192,13 @@ const TodoList = () => {
             employed: isChecked,
             id: Date.now(),
         };
-        dispatch({type: 'ADD_TODO', payload: newTodo});
+        dispatch(addTodos(newTodo));
         form.resetFields();
         setIsChecked(false)
     };
 
     const handleDelete = (id) => {
-        dispatch({type: 'DELETE_TODO', payload: id});
+        dispatch(deleteTodos(id));
     };
 
 

@@ -6,7 +6,17 @@
 @import "./styles/cssReset.css";
 @import "./styles/formStyle.css";
 @import "./styles/modal.css";
+@import "./styles/posts.css";
+@import "./styles/header.css";
 
+.main-layout{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#is-service-frame{
+    display: none;
+}
 .wrapper {
     height: 100vh;
     display: flex;

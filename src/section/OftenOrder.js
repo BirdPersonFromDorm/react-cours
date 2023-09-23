@@ -24,7 +24,7 @@ const OftenOrder = () => {
             <h1 className="title-order">
                 Часто заказывают
             </h1>
-            <div className="wrapper">
+            <div className="pizza-wrapper">
                 {
                     pizzaArray.map((item) =>
                         <SmallBlock item={item}/>

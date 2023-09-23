@@ -39,7 +39,7 @@ const PizzaSection = () => {
             <h1 className="title">
                 Пицца
             </h1>
-            <div className="wrapper">
+            <div className="pizza-wrapper">
                 {
                     pizzaArray.map((item) =>
                         <CardPizza item={item}/>

@@ -1,22 +1,25 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Context} from "../CounterContext";
+import {useDispatch, useSelector} from "react-redux";
+import {setCounterMinus, setCounterPlus} from "../redux/slice/counter";
 
 const Calculator = () => {
 
-    const {state, dispatch} = useContext(Context)
+    const {count} = useSelector((state) => state.counter)
+    const dispatch = useDispatch()
 
     const handlePlus = () =>{
-        dispatch({type: 'PLUS_ONE'})
+        dispatch(setCounterPlus())
     }
 
     const handleMinus = () =>{
-        dispatch({type: 'MINUS_ONE'})
+        dispatch(setCounterMinus())
     }
 
     return (
         <div className="calcur-wrap">
             <div style={{fontSize: 25}}>
-                {state.count}
+                {count}
             </div>
             <div className="calcur-wrap-buttons">
                 <div

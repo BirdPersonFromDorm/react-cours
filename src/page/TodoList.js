@@ -1,6 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {fetchData} from "../redux/slice/todos";
 
 const TodoList = () => {
+
 
     const ref = useRef()
     const inputTitleRef = useRef()
@@ -54,6 +57,7 @@ const TodoList = () => {
     useEffect(() => {
       inputTitleRef.current.focus()
     }, [])
+
 
     return (
         <div className="todo-wrap">
