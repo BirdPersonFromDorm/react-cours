@@ -43,7 +43,7 @@ const PostById = () => {
         <div className="post-by-id-wrap">
             <div
                 className="back-button"
-                onClick={() => navigate('/posts')}
+                onClick={() => navigate('/app/posts')}
             >
                 Назад
             </div>

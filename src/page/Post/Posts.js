@@ -29,7 +29,7 @@ const Posts = () => {
             </div>
             {
                 posts?.map(item =>
-                    <Link to={`/posts/${item?.id}?isShowTitle=${item.title.length < 20 ? 'noSlice': 'slice'}`}>
+                    <Link to={`/app/posts/${item?.id}?isShowTitle=${item.title.length < 20 ? 'noSlice': 'slice'}`}>
                         <div className="post-item">
                             <h1>
                                 {item.title}

@@ -13,18 +13,20 @@ import counter from './slice/counter'
 import todos from './slice/todos'
 import posts from './slice/posts'
 import routes from './slice/routes'
+import auth from './slice/auth'
 
 const appReducer = combineReducers({
     counter,
     todos,
     posts,
     routes,
+    auth
 });
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['todos', 'posts'],
+    whitelist: ['todos', 'posts', 'auth'],
     blacklist: ['counter', 'routes'],
 };
 
